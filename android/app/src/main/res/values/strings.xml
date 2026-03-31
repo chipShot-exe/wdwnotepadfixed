@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">wdwnotepad</string>
+    <string name="title_activity_main">wdwnotepad</string>
+    <string name="package_name">com.wdwnotepad.app</string>
+    <string name="custom_url_scheme">com.wdwnotepad.app</string>
+</resources>
