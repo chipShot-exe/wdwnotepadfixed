@@ -43,6 +43,19 @@ jobs:
           chmod +x gradlew
           ./gradlew assembleRelease --stacktrace
 
+      - name: Force Fix Android Build Tools Path
+        run: |
+          # 1. Find where the real build-tools are
+          REAL_PATH=$(ls -d $ANDROID_HOME/build-tools/* | tail -n 1)
+          
+          # 2. Create the "fake" directory the signing tool wants
+          sudo mkdir -p /usr/local/lib/android/sdk/build-tools/29.0.3
+          
+          # 3. Link the real tools (zipalign, etc.) into that fake directory
+          sudo ln -s $REAL_PATH/* /usr/local/lib/android/sdk/build-tools/29.0.3/
+          
+          echo "Linked $REAL_PATH to the expected 29.0.3 path"
+
       - name: Sign APK
         uses: r0adkll/sign-android-release@v1
         id: sign_app
@@ -52,7 +65,6 @@ jobs:
           alias: ${{ secrets.ANDROID_KEY_ALIAS }}
           keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          buildToolsVersion: 34.0.0
 
       - name: Upload Release APK
         uses: actions/upload-artifact@v4
