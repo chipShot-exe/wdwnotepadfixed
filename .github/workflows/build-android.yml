@@ -37,15 +37,24 @@ jobs:
           npx cap add android || true 
           npx cap sync android 
 
-      - name: Build Debug APK
+      - name: Build Release APK
         run: |
-          ls -R android/gradlew || echo "Gradlew not found!"
           cd android
           chmod +x gradlew
-          ./gradlew assembleDebug --stacktrace
+          ./gradlew assembleRelease --stacktrace
 
-      - name: Upload APK Artifact
+      - name: Sign APK
+        uses: r0adkll/sign-android-release@v1
+        id: sign_app
+        with:
+          releaseDirectory: android/app/build/outputs/apk/release
+          signingKeyBase64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+          alias: ${{ secrets.ANDROID_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          keyPassword: ${{ secrets.ANDROID_KEY_PASSWORD }}
+
+      - name: Upload Release APK
         uses: actions/upload-artifact@v4
         with:
-          name: disney-notepad-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          name: disney-notepad-release
+          path: ${{ steps.sign_app.outputs.signedReleaseFile }}
