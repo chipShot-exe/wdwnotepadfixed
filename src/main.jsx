@@ -16,41 +16,30 @@ import "@ionic/react/css/display.css";
 import "./index.css";
 import App from "./App.jsx";
 
-// 1. Determine the mode (URL override > Device Detection > Default to MD)
-const searchParams = new URLSearchParams(window.location.search);
-const urlMode = searchParams.get("ionic:mode");
-
-// isPlatform('ios') detects actual iPhone/iPad hardware/simulators
-const selectedMode = urlMode || (isPlatform("ios") ? "ios" : "md");
-
-// Ensure Bootstrap respects Ionic's font family across all platforms
+const selectedMode = "md";
 document.documentElement.style.setProperty(
   "--bs-body-font-family",
   "var(--ion-font-family)",
 );
 
-// Force dark theme globally for both Bootstrap and Ionic
 document.documentElement.setAttribute("data-bs-theme", "dark");
-document.documentElement.classList.add("ion-palette-dark"); // Ionic 8+ dark mode
-document.body.classList.add("dark"); // Ionic 7 and older dark mode
+document.documentElement.classList.add("ion-palette-dark");
+document.body.classList.add("dark");
 
 setupIonicReact({
   mode: selectedMode,
   animated: true,
 });
 
-if (selectedMode !== "ios") {
-  // Use ?inline to prevent Vite from unconditionally extracting and injecting the CSS on all platforms
-  import("./theme/md3/theme.css?inline")
-    .then((module) => {
-      const style = document.createElement("style");
-      style.textContent = module.default;
-      document.head.appendChild(style);
-      document.documentElement.classList.add("md3-loaded");
-    })
-    .catch((err) => console.error("MD3 Load Error:", err));
-}
-/*
+import("./theme/md3/theme.css?inline")
+  .then((module) => {
+    const style = document.createElement("style");
+    style.textContent = module.default;
+    document.head.appendChild(style);
+    document.documentElement.classList.add("md3-loaded");
+  })
+  .catch((err) => console.error("MD3 Load Error:", err));
+/* iOS LOGIC REMOVED FOR TESTING
 const selectedMode = isPlatform('ios') ? 'ios' : 'md';
 
 setupIonicReact({

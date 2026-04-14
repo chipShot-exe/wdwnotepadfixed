@@ -5,7 +5,7 @@ export default function DisneyCollapse({ children, title }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <div className="mt-2" style={{ transition: " 0.5s ease-in-out 0.5s;" }}>
+    <div className="mt-2" style={{ transition: "0.5s ease-in-out 0.5s" }}>
       <button
         className="btn btn-link fw-bold p-0 text-decoration-none shadow-none"
         onClick={() => setOpen(!open)}

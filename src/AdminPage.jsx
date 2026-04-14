@@ -1,14 +1,18 @@
 import React, { useState } from "react";
-import { DISNEY_TRIP_DATA } from "./data/itinerary.js";
+import initialData from "./data/moredata.json";
 import { Container, Card, Form, Button, Row, Col } from "react-bootstrap";
 export default function AdminPage() {
-  const [data, setData] = useState(DISNEY_TRIP_DATA);
+  const [data, setData] = useState(initialData.DISNEY_TRIP_DATA);
   const generateFile = () => {
-    const output = `export const DISNEY_TRIP_DATA = ${JSON.stringify(
-      data,
+    const output = JSON.stringify(
+      {
+        familyName: initialData.familyName,
+        DISNEY_TRIP_DATA: data,
+        GUIDE_DATA: initialData.GUIDE_DATA,
+      },
       null,
       2,
-    )};`;
+    );
     console.log(output);
     alert(output);
   };
@@ -26,13 +30,10 @@ export default function AdminPage() {
     setData(newData);
   };
   const updateActivity = (dayIdx, activityIdx, field, newValue) => {
-    // 1. Copy the top-level array
     const newData = [...data];
 
-    // 2. Copy the specific day
     const dayToUpdate = { ...newData[dayIdx] };
 
-    // 3. Copy the schedule array
     const newSchedule = [...dayToUpdate.schedule];
 
     // 4. Copy and update the specific activity

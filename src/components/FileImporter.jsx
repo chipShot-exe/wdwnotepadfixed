@@ -2,7 +2,7 @@ import React from "react";
 import { IonButton } from "@ionic/react";
 import { saveFile } from "../utils/storage";
 
-export default function FileImporter({ children, bsclasses, variant }) {
+export default function FileImporter({ children, bsclasses, variant, styles}) {
   const handleFileImport = (event) => {
     const file = event.target.files[0];
     if (!file) return;
@@ -16,7 +16,6 @@ export default function FileImporter({ children, bsclasses, variant }) {
 
         alert("Trip Imported Successfully!");
 
-        // Refresh the page to let useAppData grab the new data
         window.location.reload();
       } catch (err) {
         alert("Error: That doesn't look like a valid Disney JSON file.");
@@ -28,8 +27,7 @@ export default function FileImporter({ children, bsclasses, variant }) {
   };
 
   return (
-    <div>
-      {/* We hide the ugly default input and trigger it via a nice button */}
+    <>
       <input
         type="file"
         id="fileInput"
@@ -40,9 +38,11 @@ export default function FileImporter({ children, bsclasses, variant }) {
       <IonButton
         size=""
         onClick={() => document.getElementById("fileInput").click()}
+      className={bsclasses}
+      style={styles}
       >
         {children ? <>{children}</> : <>Import File</>}
       </IonButton>
-    </div>
+    </>
   );
 }

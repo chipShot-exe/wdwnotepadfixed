@@ -1,6 +1,7 @@
 import React from "react";
 import Details from "./Details.jsx";
 import Checkbox from "./Checkbox.jsx";
+import { motion } from "motion/react";
 import {
   IonCard,
   IonCardContent,
@@ -21,19 +22,22 @@ export default function ActivityCard({
     id = "",
     type = "",
   } = activity || {};
-  // Define dynamic styles based on completion state
   const cardClasses = `mb-3 rounded-3 overflow-hidden border transition-all overflowHidden ${
-    isCompleted ? "bg-black opacity-60" : "bg-dark opacity-100"
+    isCompleted ? "bg-black opacity-60" : "bg-dark"
   } ${isNextUp ? "border-warning border-3" : "border-dark"}`;
-
+const MotionCard = motion(IonCard);
   return (
-    <IonCard
+    <MotionCard layout
       className={cardClasses}
       style={{
         transition: "all 0.3s ease",
         backgroundColor: "var(--ion-color-step-150)",
         color: "var(--ion-color-step-900)",
       }}
+      viewport={{ amount: 0}}
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.007, ease: "easeInOut" }}
     >
       <div
         style={{ borderLeft: `5px solid var(--cat-${type})` }}
@@ -43,11 +47,7 @@ export default function ActivityCard({
           <div className="flex-grow-1">
             <IonCardHeader>
               <IonCardSubtitle
-                className="text-info ${
-    isCompleted
-      ? 'opacity-60'
-      : 'opacity-100'
-  }"
+                className={`text-info ${isCompleted ? 'opacity-60' : 'opacity-100'}`}
               >
                 {time}
               </IonCardSubtitle>
@@ -75,6 +75,6 @@ export default function ActivityCard({
           </div>
         </div>
       </div>
-    </IonCard>
+    </MotionCard>
   );
 }

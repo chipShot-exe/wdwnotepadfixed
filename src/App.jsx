@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
-import { HashRouter, Routes, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
+import { IonReactHashRouter } from "@ionic/react-router";
+import { IonRouterOutlet } from "@ionic/react";
 import Homepage from "./Homepage.jsx";
 import AdminPage from "./AdminPage.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,11 +14,11 @@ export default function App() {
   }, []);
 
   return (
-    <HashRouter>
-      <Routes>
-        <Route path="/admin" element={<AdminPage />} />
-        <Route path="*" element={<Homepage />} />
-      </Routes>
-    </HashRouter>
+    <IonReactHashRouter>
+      <IonRouterOutlet>
+        <Route path="/admin" component={AdminPage} />
+        <Route path="/" component={Homepage} />
+      </IonRouterOutlet>
+    </IonReactHashRouter>
   );
 }

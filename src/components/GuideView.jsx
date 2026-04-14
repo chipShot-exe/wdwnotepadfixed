@@ -1,9 +1,10 @@
 import React from "react";
-import { GUIDE_DATA } from "../data/itinerary";
+import initialData from "../data/moredata.json";
 import Details from "./Details.jsx";
 
 export default function GuideView({ guides }) {
-  const displayGuides = guides && guides.length > 0 ? guides : GUIDE_DATA;
+  const displayGuides =
+    guides && guides.length > 0 ? guides : initialData.GUIDE_DATA;
 
   return (
     <div style={{ padding: "16px 8px", animation: "fadeIn 0.3s ease" }}>

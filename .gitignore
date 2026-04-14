@@ -11,7 +11,7 @@ node_modules
 dist
 dist-ssr
 *.local
-
+*.jks
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
@@ -22,3 +22,34 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.gemini/
+gha-creds-*.json
+# Temporary files
+*.tmp
+*~
+
+*.bak
+# Environment files (containing secrets, API keys, credentials)
+.env
+*.env
+.env.*
+
+### React ###
+# React build directory and environment files
+
+build/
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.DS_*
+**/*.backup.*
+
+**/*.back.*
+*.sublime*
+psd
+thumb
+sketch
+
+coverage/
